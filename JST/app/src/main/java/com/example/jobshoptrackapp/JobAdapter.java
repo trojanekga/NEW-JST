@@ -42,6 +42,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder>{
         notifyDataSetChanged();
     }
 
+    public Job getJobAt(int position){
+        return jobs.get(position);
+    }
+
     class JobHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
         private TextView textViewDescription;
