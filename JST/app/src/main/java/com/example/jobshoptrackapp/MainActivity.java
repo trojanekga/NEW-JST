@@ -22,7 +22,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    //Distinguish between add and edit
     public static final int ADD_NOTE_REQUEST = 1;
+    public static final int EDIT_NOTE_REQUEST = 2;
 
     private JobViewModel jobViewModel;
 
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         buttonAddJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddJobActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddEditJobActivity.class);
                 startActivityForResult(intent, ADD_NOTE_REQUEST);
             }
         });
@@ -68,6 +70,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Job deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new JobAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Job job) {
+                //Open edit activity based on clicked job
+                Intent intent = new Intent(MainActivity.this, AddEditJobActivity.class);
+                //Sending values over to edit screen
+                intent.putExtra(AddEditJobActivity.EXTRA_ID, job.getId());
+                intent.putExtra(AddEditJobActivity.EXTRA_TITLE, job.getTitle());
+                intent.putExtra(AddEditJobActivity.EXTRA_DESCRIPTION, job.getDescription());
+                intent.putExtra(AddEditJobActivity.EXTRA_PRIORITY, job.getPriority());
+                startActivityForResult(intent, EDIT_NOTE_REQUEST);
+            }
+        });
     }
 
     @Override
@@ -75,15 +91,32 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddJobActivity.EXTRA_TITLE);
-            String description = data.getStringExtra(AddJobActivity.EXTRA_DESCRIPTION);
-            int priority = data.getIntExtra(AddJobActivity.EXTRA_PRIORITY, 1);
+            String title = data.getStringExtra(AddEditJobActivity.EXTRA_TITLE);
+            String description = data.getStringExtra(AddEditJobActivity.EXTRA_DESCRIPTION);
+            int priority = data.getIntExtra(AddEditJobActivity.EXTRA_PRIORITY, 1);
 
             Job job = new Job(title, description, priority);
             jobViewModel.insert(job);
 
             Toast.makeText(this, "Job saved", Toast.LENGTH_SHORT).show();
-        } else {
+        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK){
+            int id = data.getIntExtra(AddEditJobActivity.EXTRA_ID, -1);
+            
+            if (id == -1){
+                Toast.makeText(this, "Job can't be updated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String title = data.getStringExtra(AddEditJobActivity.EXTRA_TITLE);
+            String description = data.getStringExtra(AddEditJobActivity.EXTRA_DESCRIPTION);
+            int priority = data.getIntExtra(AddEditJobActivity.EXTRA_PRIORITY, 1);
+            
+            Job job = new  Job(title, description, priority);
+            job.setId(id);
+            jobViewModel.update(job);
+
+            Toast.makeText(this, "Job updated", Toast.LENGTH_SHORT).show();
+            
+        }else {
             Toast.makeText(this, "Job not saved", Toast.LENGTH_SHORT).show();
         }
     }

@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder>{
+public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     private List<Job> jobs = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -37,12 +38,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder>{
         return jobs.size();
     }
 
-    public void setJobs(List<Job> jobs){
+    public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
         notifyDataSetChanged();
     }
 
-    public Job getJobAt(int position){
+    public Job getJobAt(int position) {
         return jobs.get(position);
     }
 
@@ -56,6 +57,26 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder>{
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
+
+            //Get job from position based on click listener passing positon to listener
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(jobs.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    // Interface - no implementation, just declare
+    public interface OnItemClickListener {
+        void onItemClick(Job job);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

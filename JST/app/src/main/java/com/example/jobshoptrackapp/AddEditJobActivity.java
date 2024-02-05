@@ -12,7 +12,9 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-public class AddJobActivity extends AppCompatActivity {
+public class AddEditJobActivity extends AppCompatActivity {
+    public static final String EXTRA_ID =
+            "com.example.jopshoptrackapp.EXTRA_ID";
     public static final String EXTRA_TITLE =
             "com.example.jopshoptrackapp.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION =
@@ -37,7 +39,17 @@ public class AddJobActivity extends AppCompatActivity {
         numberPickerPriority.setMaxValue(10);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Job");
+        //Determine if add or edit job based on ID value existing or not (+ pass info to fields)
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_ID)){
+            setTitle("Edit Job");
+            editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
+
+        } else {
+            setTitle("Add Job");
+        }
     }
 
     private void saveJob(){
@@ -54,6 +66,12 @@ public class AddJobActivity extends AppCompatActivity {
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
+
+        //Save ID if not-existing
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1){
+            data.putExtra(EXTRA_ID, id);
+        }
 
         setResult(RESULT_OK, data);
         finish();
