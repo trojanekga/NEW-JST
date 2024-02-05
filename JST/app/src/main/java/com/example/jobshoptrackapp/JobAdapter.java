@@ -6,15 +6,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
+public class JobAdapter extends ListAdapter<Job, JobAdapter.JobHolder> {
 
-    private List<Job> jobs = new ArrayList<>();
+    //private List<Job> jobs = new ArrayList<>();
     private OnItemClickListener listener;
+
+    public JobAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+    private static final DiffUtil.ItemCallback<Job> DIFF_CALLBACK = new DiffUtil.ItemCallback<Job>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Job oldItem, @NonNull Job newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Job oldItem, @NonNull Job newItem) {
+            return oldItem.getTitle().equals(newItem.getTitle()) &&
+                    oldItem.getDescription().equals(newItem.getDescription()) &&
+                    oldItem.getPriority() == newItem.getPriority();
+        }
+    };
 
     @NonNull
     @Override
@@ -26,25 +46,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull JobHolder holder, int position) {
-        Job currentJob = jobs.get(position);
+        Job currentJob = getItem(position);
         holder.textViewTitle.setText(currentJob.getTitle());
         holder.textViewDescription.setText(currentJob.getDescription());
         holder.textViewPriority.setText(String.valueOf(currentJob.getPriority()));
 
     }
 
-    @Override
-    public int getItemCount() {
-        return jobs.size();
-    }
-
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-        notifyDataSetChanged();
-    }
-
     public Job getJobAt(int position) {
-        return jobs.get(position);
+        return getItem(position);
     }
 
     class JobHolder extends RecyclerView.ViewHolder {
@@ -64,7 +74,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(jobs.get(position));
+                        listener.onItemClick(getItem(position));
                     }
                 }
             });

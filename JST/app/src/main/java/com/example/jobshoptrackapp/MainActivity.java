@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         jobViewModel.getAllJobs().observe(this, new Observer<List<Job>>() {
             @Override
             public void onChanged(@Nullable List<Job> jobs) {
-                adapter.setJobs(jobs);
+                adapter.submitList(jobs);
             }
         });
 
