@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,11 +27,13 @@ public class MainActivity extends AppCompatActivity {
     //Distinguish between add and edit
     public static final int ADD_NOTE_REQUEST = 1;
     public static final int EDIT_NOTE_REQUEST = 2;
+    private JobAdapter adapter;
+    private List<Job> exampleList;
 
     private JobViewModel jobViewModel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -46,8 +50,20 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
+        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        //adapter = new JobAdapter();
+        //recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setAdapter(adapter);
+        //***ERROR FOR SEARCH - ADDED PARAMS TO JOB ADAPTER***
+        //List<Job> exampleList = (List<Job>)jobViewModel.getAllJobs();
         JobAdapter adapter = new JobAdapter();
+        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        //recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        //List<Job> allJobs = (List<Job>) jobViewModel.getAllJobs();
+        //JobAdapter adapter = new JobAdapter();
+        //recyclerView.setAdapter(adapter);
 
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         jobViewModel.getAllJobs().observe(this, new Observer<List<Job>>() {
@@ -126,6 +142,35 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
         return true;
+        /*
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        //Replace keyboard icon from search glass to done
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //adapter = new JobAdapter(exampleList);
+                //List<Job> allJobs = (List<Job>) jobViewModel.getAllJobs();
+                //adapter = new JobAdapter();
+                //JobAdapter adapter;
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        //int search = menu.findItem(R.id.menu_search);
+        //int searchView = search.actionView as? SearchView;
+        //searchView.isSubmitButtonEnabled() = true;
+        //searchView.setOnQueryTextListener(this);
+        */
+
     }
 
     @Override

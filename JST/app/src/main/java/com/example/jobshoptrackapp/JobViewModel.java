@@ -32,6 +32,10 @@ public class JobViewModel extends AndroidViewModel {
         repository.deleteAllJobs();
     }
 
+    //public searchDatabase(searchQuery: String): LiveData<List<Job>>{
+    //    return repository.searchDatabase(searchQuery).asLiveData();
+    //}
+
     public LiveData<List<Job>> getAllJobs() {
         return allJobs;
     }

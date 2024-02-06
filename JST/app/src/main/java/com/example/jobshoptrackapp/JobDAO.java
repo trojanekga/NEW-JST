@@ -14,6 +14,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+//import java.util.concurrent.Flow;
 
 @Dao
 public interface JobDAO {
@@ -33,5 +34,9 @@ public interface JobDAO {
     //Query to get all jobs from DB
     @Query("SELECT * FROM job_table ORDER BY priority DESC")
     LiveData<List<Job>> getAllJobs();
+
+    //Search function query
+   // @Query("SELECT * FROM job_table WHERE title LIKE :searchQuery OR description LIKE :searchQuery")
+    //void searchDatabase(searchQuery: String): Flow<List<Job>>;
 
 }
