@@ -35,8 +35,5 @@ public interface JobDAO {
     @Query("SELECT * FROM job_table ORDER BY priority DESC")
     LiveData<List<Job>> getAllJobs();
 
-    //Search function query
-   // @Query("SELECT * FROM job_table WHERE title LIKE :searchQuery OR description LIKE :searchQuery")
-    //void searchDatabase(searchQuery: String): Flow<List<Job>>;
 
 }

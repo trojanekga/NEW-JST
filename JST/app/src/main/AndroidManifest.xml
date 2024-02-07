@@ -21,6 +21,10 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Report"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:exported="true">

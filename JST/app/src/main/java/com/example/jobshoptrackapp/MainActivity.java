@@ -50,20 +50,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        //adapter = new JobAdapter();
-        //recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setAdapter(adapter);
-        //***ERROR FOR SEARCH - ADDED PARAMS TO JOB ADAPTER***
-        //List<Job> exampleList = (List<Job>)jobViewModel.getAllJobs();
         JobAdapter adapter = new JobAdapter();
-        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        //recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(adapter);
 
-        //List<Job> allJobs = (List<Job>) jobViewModel.getAllJobs();
-        //JobAdapter adapter = new JobAdapter();
-        //recyclerView.setAdapter(adapter);
 
         jobViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         jobViewModel.getAllJobs().observe(this, new Observer<List<Job>>() {
@@ -142,34 +132,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
         return true;
-        /*
-        MenuItem searchItem = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        //Replace keyboard icon from search glass to done
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //adapter = new JobAdapter(exampleList);
-                //List<Job> allJobs = (List<Job>) jobViewModel.getAllJobs();
-                //adapter = new JobAdapter();
-                //JobAdapter adapter;
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-
-        //int search = menu.findItem(R.id.menu_search);
-        //int searchView = search.actionView as? SearchView;
-        //searchView.isSubmitButtonEnabled() = true;
-        //searchView.setOnQueryTextListener(this);
-        */
 
     }
 
@@ -180,9 +142,16 @@ public class MainActivity extends AppCompatActivity {
                 jobViewModel.deleteAllJobs();
                 Toast.makeText(this, "All jobs deleted", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.report:
+                //Go to new activity with report
+                Intent intent = new Intent(MainActivity.this, Report.class);
+                startActivityForResult(intent, ADD_NOTE_REQUEST);
+
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
+
 }

@@ -99,41 +99,4 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobHolder> {
         this.listener = listener;
     }
 
-    /*
-    @Override
-    public Filter getFilter() {
-        return exampleFilter;
-    }
-    private Filter exampleFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Job> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0){
-                filteredList.addAll(exampleListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                //Iterate through items to determine if search match and if so, add to filter list
-                for (Job job : exampleListFull){
-                    if (job.getTitle().toLowerCase().contains(filterPattern)){
-                        filteredList.add(job);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            exampleList.clear();
-            exampleList.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
-
-     */
 }

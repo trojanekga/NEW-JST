@@ -14,4 +14,8 @@
         android:id="@+id/delete_all_jobs"
         android:title="Delete all jobs"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/report"
+        android:title="Get Data Report"
+        app:showAsAction="never"/>
 </menu>
