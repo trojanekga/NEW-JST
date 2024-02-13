@@ -35,5 +35,8 @@ public interface JobDAO {
     @Query("SELECT * FROM job_table ORDER BY priority DESC")
     LiveData<List<Job>> getAllJobs();
 
+    @Query("SELECT * FROM job_table WHERE priority LIKE :searchQuery")
+    List<Job> searchEntities(String searchQuery);
+
 
 }

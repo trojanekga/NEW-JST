@@ -20,6 +20,12 @@ import java.util.Locale;
 public class JobAdapter extends ListAdapter<Job, JobAdapter.JobHolder> {
     private List<Job> exampleList;
     private List<Job> exampleListFull;
+    private List<Job> jobs = new ArrayList<>();
+
+    public void setJobs(List<Job> jobs){
+        this.jobs = jobs;
+        notifyDataSetChanged();
+    }
 
     //private List<Job> jobs = new ArrayList<>();
     private OnItemClickListener listener;
@@ -59,7 +65,8 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobHolder> {
         holder.textViewTitle.setText(currentJob.getTitle());
         holder.textViewDescription.setText(currentJob.getDescription());
         holder.textViewPriority.setText(String.valueOf(currentJob.getPriority()));
-
+        //Test
+        holder.bind((Job) jobs);
     }
 
     public Job getJobAt(int position) {
@@ -70,6 +77,7 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobHolder> {
         private TextView textViewTitle;
         private TextView textViewDescription;
         private TextView textViewPriority;
+        private TextView nameTextView;
 
         public JobHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,7 +94,17 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobHolder> {
                         listener.onItemClick(getItem(position));
                     }
                 }
+
+                public void bind(Job job){
+                    nameTextView.setText(job.getTitle());
+
+                }
             });
+
+        }
+
+        public void bind(Job job) {
+            nameTextView.setText(job.getTitle());
         }
     }
 
@@ -98,5 +116,6 @@ public class JobAdapter extends ListAdapter<Job, JobAdapter.JobHolder> {
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
+
 
 }

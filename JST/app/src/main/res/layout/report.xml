@@ -13,4 +13,10 @@
         android:scrollbars="vertical"
         tools:listitem="@layout/job_item"/>
 
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

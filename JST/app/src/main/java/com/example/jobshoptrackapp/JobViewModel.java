@@ -5,18 +5,32 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 public class JobViewModel extends AndroidViewModel {
     private JobRepository repository;
     private LiveData<List<Job>> allJobs;
+    private JobDAO jobDAO;
+    private LiveData<List<Job>> searchResults;
 
 
     public JobViewModel(@NonNull Application application) {
         super(application);
         repository = new JobRepository(application);
         allJobs = repository.getAllJobs();
+        JobDatabase db = JobDatabase.getInstance(application);
+        jobDAO = db.jobDAO();
+        searchResults = new MutableLiveData<>();
+    }
+
+    public LiveData<List<Job>> getSearchResults(){
+        return searchResults;
+    }
+
+    public void searchEntities(String query){
+        searchResults = (LiveData<List<Job>>) jobDAO.searchEntities("%" + query + "%");
     }
 
     public void insert(Job job){
