@@ -6,6 +6,22 @@ dotenv.config();
 
 const dbService = require('./dbService');
 
+class Job {
+    constructor(name, dateAdded, customer) {
+        this.name = name;
+        this.dateAdded = dateAdded;
+        this.customer = customer;
+    }
+}
+
+class SubJob extends Job {
+    constructor(name, dateAdded, customer, subJob){
+        super(name, dateAdded, customer);
+        this.subJob = subJob;
+        this.dateAdded = dateAdded -5;
+    }
+}
+
 
 app.use(cors());
 app.use(express.json());

@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function(){
     
 });
 
+
+
 document.querySelector('table tbody').addEventListener('click', function(event) {
     //console.log(event.target);
     if (event.target.className === "delete-row-btn") {
