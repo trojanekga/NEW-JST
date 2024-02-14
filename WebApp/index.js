@@ -73,6 +73,9 @@ addBtn.onclick = function () {
     const nameInput = document.querySelector('#name-input');
     const name = nameInput.value;
     nameInput.value = "";
+    const customerInput = document.querySelector('#customer-input');
+    const customer = customerInput.value;
+    customerInput.value = "";
 
     fetch('http://localhost:5000/insert', {
         headers: {
@@ -80,7 +83,7 @@ addBtn.onclick = function () {
 
         },
         method: 'POST',
-        body: JSON.stringify({name : name})
+        body: JSON.stringify({name : name, customer : customer})
     })
     .then(response => response.json())
     .then(data => insertRowIntoTable(data['data']))
@@ -97,11 +100,12 @@ function insertRowIntoTable(data) {
         if (data.hasOwnProperty(key)) {
             if (key === 'dateAdded') {
                 data[key] = new Date(data[key]).toLocaleString();
+                data.customer = new String(data.customer).toString();
             }
             tableHtml += `<td>${data[key]}</td>`;
         }
     }
-
+    tableHtml += `<td>${data.customer}</td>`;
     tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</td>`;
     tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</td>`;
 
@@ -128,13 +132,15 @@ function loadHTMLTable(data){
     }
     let tableHtml = "";
 
-    data.forEach(function ({id, name, date_added}) {
+    data.forEach(function ({id, name, date_added, customer}) {
         tableHtml += "<tr>";
         tableHtml += `<td>${id}</td>`;
         tableHtml += `<td>${name}</td>`;
         tableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`;
+        tableHtml += `<td>${customer}</td>`;
         tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</td>`;
         tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</td>`;
+        
         tableHtml += "</tr>";
     });
 

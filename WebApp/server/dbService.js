@@ -39,13 +39,13 @@ class DbService {
         }
     }
 
-    async insertNewName(name) {
+    async insertNewName(name, customer) {
         try {
             const dateAdded = new Date();
+            //const customer = customer;
             const insertId = await new Promise((resolve, reject)=> {
-                //const query = "SELECT * FROM jobs WHERE id = ?"
-                const query = "INSERT INTO jobs (name, date_added) VALUES (?,?);";
-                connection.query(query, [name, dateAdded], (err, result) => {
+                const query = "INSERT INTO jobs (name, date_added, customer) VALUES (?,?,?);";
+                connection.query(query, [name, dateAdded, customer], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.insertId);
                 })
@@ -53,7 +53,8 @@ class DbService {
             return {
                 id: insertId,
                 name: name,
-                dateAdded: dateAdded
+                dateAdded: dateAdded,
+                //customer: customer
             }
 
         } catch (error) {
@@ -109,7 +110,7 @@ class DbService {
                     resolve(results);
                 })
             });
-            
+
             return response;
         } catch (error) {
             console.log(error);
