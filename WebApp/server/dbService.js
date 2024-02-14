@@ -99,7 +99,25 @@ class DbService {
         }
     }
 
+    async searchByName(name) {
+        try{
+            const response = await new Promise((resolve, reject) => {
+                //const query = "SELECT * FROM jobs WHERE id = ?"
+                const query = "SELECT * FROM jobs WHERE name = ?";
+                connection.query(query, [name], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+            
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
+
+
 
 
 module.exports = DbService;

@@ -61,5 +61,16 @@ app.delete('/delete/:id', (request, response) => {
     .catch(err => console.log(err));
 })
 
+app.get('/search/:name', (request, response) => {
+    const { name } = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.searchByName(name);
+
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+
+})
+
 
 app.listen(process.env.PORT, () => console.log('App is running'));
