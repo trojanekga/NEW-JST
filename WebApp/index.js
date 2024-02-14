@@ -5,7 +5,14 @@ document.addEventListener('DOMContentLoaded', function(){
     
 });
 
-
+function validate(){
+    if (document.forms.name.value.trim() === ""){
+        alert("Please enter a job name");
+        document.forms.name.focus();
+        return false;
+    }
+    return true;
+}
 
 document.querySelector('table tbody').addEventListener('click', function(event) {
     //console.log(event.target);
@@ -81,7 +88,12 @@ addBtn.onclick = function () {
     const descriptionInput = document.querySelector("#description-input");
     const description = descriptionInput.value;
     descriptionInput.value = "";
-
+    //Input validation to eliminate missing fields below:
+    if (name === "" || customer === "" || description === ""){
+        alert("Please complete all fields");
+        return false;
+    }
+    else{
     fetch('http://localhost:5000/insert', {
         headers: {
             'Content-type': 'application/json'
@@ -93,6 +105,7 @@ addBtn.onclick = function () {
     .then(response => response.json())
     .then(data => insertRowIntoTable(data['data']))
     ;
+    }
 }
 
 function insertRowIntoTable(data) {

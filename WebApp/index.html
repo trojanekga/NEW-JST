@@ -8,6 +8,7 @@
 </head>
 <body>
     <main>
+        
         <label>Job Name:</label>
         <input type="text" id="name-input">
         <br> <br>
@@ -17,7 +18,9 @@
         <label>Description:</label>
         <input type="text" id="description-input">
         <br> <br>
-        <button id="add-name-btn">Add Job</button>
+        <!--<button id="add-name-btn">Add Job</button>-->
+        <input type="submit" id="add-name-btn" value="Add Job">
+        
 
         <br><br><br>
         <div>
@@ -42,8 +45,13 @@
             </tbody>
         </table>
         <section hidden id="update-row">
+            <h3>Edit Job</h3>
             <label>Edit Name:</label>
             <input type="text" id="update-name-input">
+            <br> <br>
+            <label>Edit Description:</label>
+            <input type="text" id="update-description-input">
+            <br> <br>
             <button id="update-row-btn">Update</button>
         </section>
     </main>

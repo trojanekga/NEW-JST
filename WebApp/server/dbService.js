@@ -43,6 +43,10 @@ class DbService {
         try {
             const dateAdded = new Date();
             //const customer = customer;
+            //if (name === "" || customer === "" || description === "") {
+            //    alert("Please enter a job name");
+            //}
+            //else{
             const insertId = await new Promise((resolve, reject)=> {
                 const query = "INSERT INTO jobs (name, date_added, customer, description) VALUES (?,?,?,?);";
                 connection.query(query, [name, dateAdded, customer, description], (err, result) => {
@@ -50,6 +54,7 @@ class DbService {
                     resolve(result.insertId);
                 })
             });
+            //}
             return {
                 id: insertId,
                 name: name,
