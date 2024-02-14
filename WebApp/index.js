@@ -78,6 +78,9 @@ addBtn.onclick = function () {
     const customerInput = document.querySelector('#customer-input');
     const customer = customerInput.value;
     customerInput.value = "";
+    const descriptionInput = document.querySelector("#description-input");
+    const description = descriptionInput.value;
+    descriptionInput.value = "";
 
     fetch('http://localhost:5000/insert', {
         headers: {
@@ -85,7 +88,7 @@ addBtn.onclick = function () {
 
         },
         method: 'POST',
-        body: JSON.stringify({name : name, customer : customer})
+        body: JSON.stringify({name : name, customer : customer, description : description})
     })
     .then(response => response.json())
     .then(data => insertRowIntoTable(data['data']))
@@ -103,11 +106,13 @@ function insertRowIntoTable(data) {
             if (key === 'dateAdded') {
                 data[key] = new Date(data[key]).toLocaleString();
                 data.customer = new String(data.customer).toString();
+                data.description = new String(data.description).toString();
             }
             tableHtml += `<td>${data[key]}</td>`;
         }
     }
     tableHtml += `<td>${data.customer}</td>`;
+    tableHtml += `<td>${data.description}</td>`;
     tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</td>`;
     tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</td>`;
 
@@ -134,12 +139,13 @@ function loadHTMLTable(data){
     }
     let tableHtml = "";
 
-    data.forEach(function ({id, name, date_added, customer}) {
+    data.forEach(function ({id, name, date_added, customer, description}) {
         tableHtml += "<tr>";
         tableHtml += `<td>${id}</td>`;
         tableHtml += `<td>${name}</td>`;
         tableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`;
         tableHtml += `<td>${customer}</td>`;
+        tableHtml += `<td>${description}</td>`;
         tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</td>`;
         tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</td>`;
         

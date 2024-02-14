@@ -31,8 +31,9 @@ app.use(express.urlencoded({extended : false}));
 app.post('/insert', (request, response) => {
     const { name } = request.body;
     const { customer } = request.body;
+    const { description } = request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.insertNewName(name, customer);
+    const result = db.insertNewName(name, customer, description);
 
     result
     .then(data => response.json({ data: data}))
