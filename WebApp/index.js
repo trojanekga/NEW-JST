@@ -15,17 +15,21 @@ function validate(){
 }
 
 document.querySelector('table tbody').addEventListener('click', function(event) {
-    //console.log(event.target);
+    const previouslyHighlightedRow = document.querySelector('.highlighted-row');
+    if (previouslyHighlightedRow) {
+        previouslyHighlightedRow.classList.remove('highlighted-row');
+    }
+
     if (event.target.className === "delete-row-btn") {
         deleteRowById(event.target.dataset.id);
     }
     if (event.target.className === "edit-row-btn") {
+        const row = event.target.closest('tr');
+        row.classList.add('highlighted-row');
         handleEditRow(event.target.dataset.id);
     }
-    //if (event.target.className === "report-btn"){
-    //    handleReportRow(event.target.dataset.customer);
-    //}
-});
+}
+);
 
 const updateBtn = document.querySelector('#update-row-btn');
 const searchBtn = document.querySelector('#search-btn');
@@ -59,7 +63,8 @@ function deleteRowById(id) {
     .then(response => response.json())
     .then(data => {
         if (data.success){
-            location.reload();
+            //location.reload();
+            refresh();
         }
     });
 }
@@ -123,6 +128,7 @@ addBtn.onclick = function () {
     .then(data => insertRowIntoTable(data['data']))
     ;
     }
+    refresh();
 }
 
 function insertRowIntoTable(data) {
@@ -181,6 +187,8 @@ function loadHTMLTable(data){
     });
 
     table.innerHTML = tableHtml;
+
+    refresh();
 }
 
 function loadReportTable(data){
@@ -211,3 +219,10 @@ function handleReportRow() {
     reportSection.hidden = false;
     //document.querySelector('#report-input').dataset.customer = customer;
 }
+
+//function refresh(){
+ //   fetch('http://localhost:5000/getAll')
+ //   .then(response => response.json())
+  //  .then(data => loadHTMLTable(data['data']));
+  //  return;
+//}
