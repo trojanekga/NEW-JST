@@ -22,11 +22,16 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
     if (event.target.className === "edit-row-btn") {
         handleEditRow(event.target.dataset.id);
     }
+    //if (event.target.className === "report-btn"){
+    //    handleReportRow(event.target.dataset.customer);
+    //}
 });
 
 const updateBtn = document.querySelector('#update-row-btn');
 const searchBtn = document.querySelector('#search-btn');
+const reportBtn = document.querySelector('#report-btn');
 
+//Search button
 searchBtn.onclick = function () {
     const searchValue = document.querySelector('#search-input').value;
 
@@ -34,6 +39,18 @@ searchBtn.onclick = function () {
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }
+
+//Report button
+reportBtn.onclick = function () {
+    const reportCustomer = document.querySelector('#report-input').value;
+    handleReportRow(reportCustomer);
+
+    fetch('http://localhost:5000/report/' + reportCustomer)
+    .then(response => response.json())
+    .then(data => loadReportTable(data['data']));
+
+}
+
 
 function deleteRowById(id) {
     fetch('http://localhost:5000/delete/' + id, {
@@ -142,10 +159,8 @@ function insertRowIntoTable(data) {
 
 function loadHTMLTable(data){
     const table = document.querySelector('table tbody');
-
     //console.log(data);
     
-
     if (data.length === 0){
         table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
         return;
@@ -166,4 +181,33 @@ function loadHTMLTable(data){
     });
 
     table.innerHTML = tableHtml;
+}
+
+function loadReportTable(data){
+    const reportTable = document.querySelector('report-table tbody');
+
+    if (data.length === 0){
+        reportTable.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
+        return;
+    }
+    let reportTableHtml = "";
+
+    data.forEach(function ({id, name, date_added, customer, description}) {
+        reportTableHtml += "<tr>";
+        reportTableHtml += `<td>${id}</td>`;
+        reportTableHtml += `<td>${name}</td>`;
+        reportTableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`;
+        reportTableHtml += `<td>${customer}</td>`;
+        reportTableHtml += `<td>${description}</td>`;
+        
+        reportTableHtml += "</tr>";
+    });
+
+    reportTable.innerHTML = reportTableHtml;
+}
+
+function handleReportRow(customer) {
+    const reportSection = document.querySelector('#report-row');
+    reportSection.hidden = false;
+    document.querySelector('#report-input').dataset.customer = customer;
 }

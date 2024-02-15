@@ -122,6 +122,24 @@ class DbService {
             console.log(error);
         }
     }
+
+    async reportByCustomer(customer) {
+        try{
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM jobs WHERE customer = ?";
+                connection.query(query, [customer], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                    console.log(results);
+                })
+                
+            });
+
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 
