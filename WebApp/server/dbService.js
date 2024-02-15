@@ -130,11 +130,11 @@ class DbService {
                 connection.query(query, [customer], (err, results) => {
                     if (err) reject(new Error(err.message));
                     resolve(results);
-                    console.log(results);
+                    //console.log(results);
                 })
                 
             });
-
+            console.log(response);
             return response;
         } catch (error) {
             console.log(error);

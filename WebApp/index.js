@@ -43,7 +43,7 @@ searchBtn.onclick = function () {
 //Report button
 reportBtn.onclick = function () {
     const reportCustomer = document.querySelector('#report-input').value;
-    handleReportRow(reportCustomer);
+    handleReportRow();
 
     fetch('http://localhost:5000/report/' + reportCustomer)
     .then(response => response.json())
@@ -184,14 +184,14 @@ function loadHTMLTable(data){
 }
 
 function loadReportTable(data){
-    const reportTable = document.querySelector('report-table tbody');
+    const reportTable = document.querySelector('table.report-table tbody');
 
     if (data.length === 0){
         reportTable.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
         return;
     }
     let reportTableHtml = "";
-
+    //console.log(data);
     data.forEach(function ({id, name, date_added, customer, description}) {
         reportTableHtml += "<tr>";
         reportTableHtml += `<td>${id}</td>`;
@@ -206,8 +206,8 @@ function loadReportTable(data){
     reportTable.innerHTML = reportTableHtml;
 }
 
-function handleReportRow(customer) {
+function handleReportRow() {
     const reportSection = document.querySelector('#report-row');
     reportSection.hidden = false;
-    document.querySelector('#report-input').dataset.customer = customer;
+    //document.querySelector('#report-input').dataset.customer = customer;
 }
