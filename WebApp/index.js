@@ -77,6 +77,8 @@ function handleEditRow(id) {
 
 updateBtn.onclick = function() {
     const updatedNameInput = document.querySelector('#update-name-input');
+    //document.querySelector('#update-name-input').textContent = dataset.name.toString();
+    //updatedNameInput.ariaPlaceholder = dataset.name;
 
     //console.log(updateNameInput);
 
@@ -149,8 +151,8 @@ function insertRowIntoTable(data) {
     }
     tableHtml += `<td>${data.customer}</td>`;
     tableHtml += `<td>${data.description}</td>`;
-    tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</td>`;
-    tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</td>`;
+    tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>DELETE</td>`;
+    tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>EDIT</td>`;
 
     tableHtml += "</tr>";
 
@@ -180,8 +182,8 @@ function loadHTMLTable(data){
         tableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`;
         tableHtml += `<td>${customer}</td>`;
         tableHtml += `<td>${description}</td>`;
-        tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</td>`;
-        tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</td>`;
+        tableHtml += `<td><button class="delete-row-btn" data-id=${id}>DELETE</td>`;
+        tableHtml += `<td><button class="edit-row-btn" data-id=${id}>EDIT</td>`;
         
         tableHtml += "</tr>";
     });

@@ -1,7 +1,15 @@
+body {
+    background-color: #E0E0FB;
+}
+
+
 main {
     width: 50%;
     margin: 50px auto;
     text-align: center;
+    background-color: #8A8AEF;
+    padding: 50px;
+    color: #090934;
 
 }
 
@@ -12,6 +20,7 @@ table {
 table, th, td {
     border-collapse: collapse;
     border: 1px solid #000;
+    color: #151599;
 
 }
 
@@ -19,6 +28,22 @@ th, td {
     padding: 5px;
 }
 
+th {
+    color: #090934
+}
+
 .highlighted-row {
     background-color: yellow;
+}
+
+button {
+    background-color: #151599;
+    color: white;
+    border: none;
+    height: 36px;
+    width: 100px;
+    border-radius: 3px;
+    cursor: pointer;
+    
+    
 }
