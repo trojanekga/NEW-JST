@@ -85,6 +85,7 @@ class DbService {
             console.log(error);
             return false;
         }
+        
     }
 
     async updateNameById(id, name){

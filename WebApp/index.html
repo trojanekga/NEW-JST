@@ -8,7 +8,8 @@
 </head>
 <body>
     <main>
-        
+        <h1>JOB SHOP TRACKER APP</h1>
+        <div id="add-job-div">
         <label>Job Name:</label>
         <input type="text" id="name-input">
         <br> <br>
@@ -20,15 +21,16 @@
         <br> <br>
         <button id="add-name-btn">ADD JOB</button>
         <!-- <input type="submit" id="add-name-btn" value="Add Job"> -->
-        
+    </div>
 
         <br><br><br>
-        <div>
+        <div id="search-div">
             <input placeholder="Search by name"
             id="search-input">
             <button id="search-btn">SEARCH</button>
         </div>
-
+        <br><br>
+        <h3>CURRENT JOBS</h3>
         <table id="table">
             <thead>
                 <th>ID</th>
@@ -62,14 +64,14 @@
         </div>
         
         <section hidden id="report-row">
-            <h2>Report by Customer</h2>
+            <h3>REPORT BY CUSTOMER</h3>
         <table class="report-table">
             <thead>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Date Added</th>
-                <th>Customer</th>
-                <th>Description</th>
+                <th>NAME</th>
+                <th>DATE ADDED</th>
+                <th>CUSTOMER</th>
+                <th>DESCRIPTION</th>
                 
             </thead>
             <tbody>
