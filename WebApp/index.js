@@ -117,6 +117,10 @@ addBtn.onclick = function () {
         alert("Please complete all fields");
         return false;
     }
+    else if (description.length < 5) {
+        alert("Please provide more of a description (more than 5 characters)");
+        return false;
+    }
     else{
     fetch('http://localhost:5000/insert', {
         headers: {
