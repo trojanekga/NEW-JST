@@ -10,5 +10,6 @@ function validateData (name, customer, description) {
         return true;
     }
 };
+//The above is being used in index.js for validating new job data input - this class is for testing
 
 module.exports = validateData;
